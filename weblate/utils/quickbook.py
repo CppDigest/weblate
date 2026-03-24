@@ -215,27 +215,27 @@ def _parse_bracket_keyword(text: str) -> tuple[str, int]:
     n = len(text)
 
     # Single-character special keywords: /, #, $, @, ?, :
-    if i < n and text[i] in ("/", "#", "$", "@", "?", ":"):
+    if i < n and text[i] in {"/", "#", "$", "@", "?", ":"}:
         kw = text[i]
         i += 1
-        while i < n and text[i] in (" ", "\t"):
+        while i < n and text[i] in {" ", "\t"}:
             i += 1
         return kw, i
 
     # Multi-character keyword: read until whitespace, ], or :
     kw_start = i
-    while i < n and text[i] not in (" ", "\t", "\n", "]", ":"):
+    while i < n and text[i] not in {" ", "\t", "\n", "]", ":"}:
         i += 1
     kw = text[kw_start:i].lower()
 
     # Optional :id suffix (e.g. ``section:my_anchor``)
     if i < n and text[i] == ":":
         i += 1
-        while i < n and text[i] not in (" ", "\t", "\n", "]"):
+        while i < n and text[i] not in {" ", "\t", "\n", "]"}:
             i += 1  # skip the id token
 
     # Skip trailing spaces / tabs after keyword or :id, then one optional newline.
-    while i < n and text[i] in (" ", "\t"):
+    while i < n and text[i] in {" ", "\t"}:
         i += 1
     if i < n and text[i] == "\n":
         i += 1
@@ -456,7 +456,7 @@ def _parse_table_inner(
     i = inner_abs_start + nl + 1
     while i < inner_abs_end:
         ch = content[i]
-        if ch in (" ", "\t", "\n"):
+        if ch in {" ", "\t", "\n"}:
             i += 1
             continue
         if ch != "[":
@@ -472,7 +472,7 @@ def _parse_table_inner(
         ci = i + 1  # skip the opening '['
         while ci < row_end:
             cc = content[ci]
-            if cc in (" ", "\t", "\n"):
+            if cc in {" ", "\t", "\n"}:
                 ci += 1
                 continue
             if cc != "[":
@@ -556,7 +556,7 @@ def _parse_qbk(
 
         # ── code block: line begins with space or tab ─────────────────────────
         # Only treat as a code block if we are at the very start of a line.
-        if ch in (" ", "\t") and (i == 0 or content[i - 1] == "\n"):
+        if ch in {" ", "\t"} and (i == 0 or content[i - 1] == "\n"):
             # Consume all consecutive indented or blank lines.
             while i < stop:
                 while i < stop and content[i] != "\n":
@@ -566,7 +566,7 @@ def _parse_qbk(
                 i += 1
                 line += 1
                 # Stop when the next line is neither blank nor indented.
-                if i < stop and content[i] not in (" ", "\t", "\n"):
+                if i < stop and content[i] not in {" ", "\t", "\n"}:
                     break
             continue
 
@@ -718,7 +718,7 @@ def _parse_qbk(
                 continue
 
             # ── tables and variable lists (cell-level parsing) ────────────
-            if kw in ("table", "variablelist"):
+            if kw in {"table", "variablelist"}:
                 segments.extend(
                     _parse_table_inner(
                         content,
@@ -747,7 +747,7 @@ def _parse_qbk(
 
             if not line_text.strip():  # blank line → end of para
                 break
-            if line_text and line_text[0] in (" ", "\t"):  # code block next
+            if line_text and line_text[0] in {" ", "\t"}:  # code block next
                 break
             if line_text.startswith("'''"):  # raw escape next
                 break
@@ -777,7 +777,7 @@ def _parse_qbk(
         stripped = content[para_start:i].rstrip()
         if stripped and _has_prose(stripped):
             first_non_ws = stripped.lstrip()[0]
-            is_list = first_non_ws in ("*", "#")
+            is_list = first_non_ws in {"*", "#"}
             if is_list:
                 # Keep newlines: each line is a structural list item.
                 msgid = stripped
@@ -909,6 +909,12 @@ def po_to_qbk(template_content: str, po_store: Any, filename: str) -> str:
 
         translation = translations.get(seg.msgid)
         if translation:
+            # The original span may end with a newline (e.g. code-fence
+            # content whose text_end points at the closing ``` line).
+            # The cleaned msgid/msgstr has no trailing newline, so restore
+            # it to keep whatever follows (``` or otherwise) on its own line.
+            if seg.text_end > 0 and template_content[seg.text_end - 1] == "\n":
+                translation = translation.rstrip("\n") + "\n"
             parts.append(translation)
         else:
             # No translation available: keep the original source text.

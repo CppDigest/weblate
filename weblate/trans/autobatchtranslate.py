@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 def auto_translate_via_openrouter(translation: Translation) -> Translation:
     """Auto translation via OpenRouter (modularized)."""
     # 1) Resolve configuration
-    api_key, model, config_source = _resolve_openrouter_config(translation)
+    api_key, model, _config_source = _resolve_openrouter_config(translation)
     if not api_key or not model:
         translation.log_warning(
             "OpenRouter configuration not found, skipping auto-translation for: %s",
@@ -106,11 +106,6 @@ def _resolve_openrouter_config(translation: Translation):
 
 
 def _prepare_batch_request(translation: Translation):
-
-    from weblate.utils.openrouter_translator import (
-        OpenRouterTranslator,  # noqa: F401 (import side-effect for types)
-    )
-
     # Collect untranslated units
     units_qs = translation.unit_set.all().order_by("position")
     if not units_qs.exists():

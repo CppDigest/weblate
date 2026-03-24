@@ -13,7 +13,7 @@ in :mod:`weblate.utils.quickbook`.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, BinaryIO
+from typing import IO, TYPE_CHECKING
 
 from django.utils.translation import gettext_lazy
 from translate.storage.pypo import pofile
@@ -47,7 +47,7 @@ class QuickBookFormat(ConvertFormat):
 
     def convertfile(
         self,
-        storefile: str | BinaryIO,
+        storefile: IO[bytes],
         template_store: TranslationFormat | None,
     ) -> TranslationStore:
         """Extract translatable strings from a .qbk file, returning a ``pofile``."""
@@ -61,11 +61,8 @@ class QuickBookFormat(ConvertFormat):
                 template_path = tf
 
         if template_path is None:
-            # Fall back: use storefile itself as the template.
-            if isinstance(storefile, str):
-                template_path = storefile
-            else:
-                template_path = getattr(storefile, "name", None)
+            # Fall back: use storefile path as the template.
+            template_path = getattr(storefile, "name", None)
 
         if template_path is None:
             report_error("QuickBook: cannot determine template file path")
@@ -88,24 +85,48 @@ class QuickBookFormat(ConvertFormat):
         filename = Path(template_path).name
         store = qbk_to_po(content, filename, self.existing_units)
 
-        # When loading the source-language file (storefile IS the template), set
-        # target = source on every unit.  This mirrors what po4a-gettextize produces
-        # when given the same file for both master and localized, and is required so
-        # that Weblate stores the correct (non-empty) translation for the source
-        # language in a monolingual component.
-        storefile_path = (
-            getattr(storefile, "name", storefile)
-            if not isinstance(storefile, str)
-            else storefile
-        )
+        storefile_path: str | None = getattr(storefile, "name", None)
         if storefile_path == template_path:
+            # Loading the source-language file: set target = source on every unit
+            # so Weblate stores a non-empty translation for the source language.
             for unit in store.units:
                 if not unit.isheader():
                     unit.target = unit.source
+        # Loading a translated .qbk file: parse it and pair its segments
+        # positionally with the template segments to populate msgstr values.
+        # This mirrors what po4a-gettextize does when given both -m and -l.
+        elif storefile_path is None:
+            report_error(
+                "QuickBook: cannot load translated .qbk without a filesystem path"
+            )
+        else:
+            try:
+                translated_content = Path(storefile_path).read_text(encoding="utf-8")
+                translated_store = qbk_to_po(
+                    translated_content, Path(storefile_path).name
+                )
+                trans_units = [u for u in translated_store.units if not u.isheader()]
+                tmpl_units = [u for u in store.units if not u.isheader()]
+                if len(tmpl_units) != len(trans_units):
+                    report_error(
+                        "QuickBook: refusing positional import: segment count mismatch "
+                        f"(file={storefile_path!s}, name={Path(storefile_path).name!s}, "
+                        f"template_units={len(tmpl_units)}, translated_units={len(trans_units)})"
+                    )
+                else:
+                    for tmpl_unit, trans_unit in zip(
+                        tmpl_units, trans_units, strict=True
+                    ):
+                        if trans_unit.source:
+                            tmpl_unit.target = trans_unit.source
+            except Exception as exc:
+                report_error(
+                    f"QuickBook: cannot read translated file {storefile_path}: {exc}"
+                )
 
         return store
 
-    def save_content(self, handle: BinaryIO) -> None:
+    def save_content(self, handle: IO[bytes]) -> None:
         """Write the translated .qbk by applying PO translations to the template."""
         template_store = getattr(self, "template_store", None)
         if template_store is None:

@@ -15,6 +15,7 @@ weblate-*.tar.*
 *.sublime-*
 .vscode/*
 /weblate.egg-info/
+/boost_weblate.egg-info/
 /build/
 /data/
 /data-test/
@@ -31,6 +32,7 @@ weblate-*.tar.*
 /weblate-*.log
 /weblate-*.pid
 /dev-docker/.env
+/docker/environment
 /dev-docker/data/
 /dev-docker/weblate-dev/requirements.txt
 *~
@@ -41,6 +43,7 @@ weblate-*.tar.*
 /weblate-openapi.yaml
 /memray*
 /mypy.log
+/test/
 
 # Local development
 .cursorignore

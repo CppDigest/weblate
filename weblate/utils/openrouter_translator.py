@@ -1,12 +1,13 @@
-"""
-OpenRouter API Translation for Weblate
-Batch translation using OpenRouter API via OpenAI SDK.
-"""
+# Copyright © Michal Čihař <michal@weblate.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+"""OpenRouter API translation for Weblate (batch translation via OpenAI SDK)."""
 
 from __future__ import annotations
 
 import time
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, cast
 
 from openai import OpenAI
 
@@ -132,13 +133,20 @@ class OpenRouterTranslator:
                 completion = self.client.chat.completions.create(
                     extra_headers={"X-Title": "Documentation Batch Translation"},
                     model=self.model,
-                    messages=messages,
+                    messages=cast(Any, messages),  # noqa: TC006
                     response_format={"type": "json_object"},
                     temperature=0,
                     max_tokens=60000,
                 )
 
-                response_text = completion.choices[0].message.content.strip()
+                raw_content = completion.choices[0].message.content
+                if raw_content is None:
+                    self.log_error(
+                        "Batch translation API returned empty message content"
+                    )
+                    msg = "OpenRouter returned no message content"
+                    raise ValueError(msg)
+                response_text = raw_content.strip()
 
                 # Clean up response - remove markdown code fences if present
                 if response_text.startswith("```"):
@@ -192,3 +200,6 @@ class OpenRouterTranslator:
                 # For non-429 errors, raise immediately
                 self.log_error("Batch translation API request failed: %s", e)
                 raise
+
+        msg = "OpenRouter batch translation exhausted retries without result"
+        raise RuntimeError(msg)

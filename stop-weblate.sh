@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-FileCopyrightText: Michal Čihař <michal@weblate.org>
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 # Weblate Stop Script
 # Stop all Weblate server and Celery workers

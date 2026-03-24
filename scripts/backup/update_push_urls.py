@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Copyright © Michal Čihař <michal@weblate.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 """
 Script to update repository URLs (both repo and push) and push branch for all Weblate components.
 

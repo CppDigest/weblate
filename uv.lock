@@ -334,6 +334,477 @@ wheels = [
 ]
 
 [[package]]
+name = "boost-weblate"
+version = "1.0.0"
+source = { editable = "." }
+dependencies = [
+    { name = "aeidon" },
+    { name = "ahocorasick-rs" },
+    { name = "altcha" },
+    { name = "borgbackup" },
+    { name = "celery", extra = ["redis"] },
+    { name = "certifi" },
+    { name = "charset-normalizer" },
+    { name = "confusable-homoglyphs" },
+    { name = "crispy-bootstrap3" },
+    { name = "crispy-bootstrap5" },
+    { name = "cryptography" },
+    { name = "cssselect" },
+    { name = "cyrtranslit" },
+    { name = "cython" },
+    { name = "dateparser" },
+    { name = "diff-match-patch" },
+    { name = "disposable-email-domains" },
+    { name = "django", extra = ["argon2"] },
+    { name = "django-appconf" },
+    { name = "django-celery-beat" },
+    { name = "django-compressor" },
+    { name = "django-cors-headers" },
+    { name = "django-crispy-forms" },
+    { name = "django-filter" },
+    { name = "django-otp" },
+    { name = "django-otp-webauthn" },
+    { name = "django-redis" },
+    { name = "djangorestframework" },
+    { name = "djangorestframework-csv" },
+    { name = "docutils" },
+    { name = "drf-spectacular", extra = ["sidecar"] },
+    { name = "drf-standardized-errors", extra = ["openapi"] },
+    { name = "fedora-messaging" },
+    { name = "filelock" },
+    { name = "fluent-syntax" },
+    { name = "gitpython" },
+    { name = "hiredis" },
+    { name = "html2text" },
+    { name = "iniparse" },
+    { name = "jsonschema" },
+    { name = "lxml" },
+    { name = "mistletoe" },
+    { name = "nh3" },
+    { name = "openpyxl" },
+    { name = "packaging" },
+    { name = "phply" },
+    { name = "pillow" },
+    { name = "pyaskalono" },
+    { name = "pycairo" },
+    { name = "pygments" },
+    { name = "pygobject" },
+    { name = "pyicumessageformat" },
+    { name = "pyparsing" },
+    { name = "python-dateutil" },
+    { name = "qrcode" },
+    { name = "rapidfuzz" },
+    { name = "redis" },
+    { name = "regex" },
+    { name = "requests" },
+    { name = "ruamel-yaml" },
+    { name = "sentry-sdk" },
+    { name = "siphashc" },
+    { name = "social-auth-app-django" },
+    { name = "social-auth-core" },
+    { name = "tesserocr" },
+    { name = "translate-toolkit", extra = ["toml"] },
+    { name = "translation-finder" },
+    { name = "unidecode" },
+    { name = "urllib3", extra = ["brotli", "zstd"] },
+    { name = "user-agents" },
+    { name = "weblate-fonts" },
+    { name = "weblate-language-data" },
+    { name = "weblate-schemas" },
+]
+
+[package.optional-dependencies]
+alibaba = [
+    { name = "aliyun-python-sdk-alimt" },
+    { name = "aliyun-python-sdk-core" },
+]
+all = [
+    { name = "aliyun-python-sdk-alimt" },
+    { name = "aliyun-python-sdk-core" },
+    { name = "boto3" },
+    { name = "django-auth-ldap" },
+    { name = "django-zxcvbn-password-validator" },
+    { name = "git-review" },
+    { name = "google-cloud-storage" },
+    { name = "google-cloud-translate" },
+    { name = "logging-gelf" },
+    { name = "mercurial" },
+    { name = "openai" },
+    { name = "psycopg", extra = ["binary"] },
+]
+amazon = [
+    { name = "boto3" },
+]
+gelf = [
+    { name = "logging-gelf" },
+]
+gerrit = [
+    { name = "git-review" },
+]
+google = [
+    { name = "google-cloud-storage" },
+    { name = "google-cloud-translate" },
+]
+ldap = [
+    { name = "django-auth-ldap" },
+]
+mercurial = [
+    { name = "mercurial" },
+]
+mysql = [
+    { name = "mysqlclient" },
+]
+openai = [
+    { name = "openai" },
+]
+postgres = [
+    { name = "psycopg", extra = ["binary"] },
+]
+saml = [
+    { name = "python3-saml" },
+]
+saml2idp = [
+    { name = "djangosaml2idp" },
+]
+wlhosted = [
+    { name = "wlhosted" },
+]
+wllegal = [
+    { name = "wllegal" },
+]
+wsgi = [
+    { name = "granian" },
+]
+zxcvbn = [
+    { name = "django-zxcvbn-password-validator" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "boto3-stubs" },
+    { name = "celery-types" },
+    { name = "coverage" },
+    { name = "django-debug-toolbar" },
+    { name = "django-stubs", extra = ["compatible-mypy"] },
+    { name = "django-stubs-ext" },
+    { name = "djangorestframework-stubs" },
+    { name = "furo" },
+    { name = "jinja2" },
+    { name = "matplotlib" },
+    { name = "mypy" },
+    { name = "pillow" },
+    { name = "prek" },
+    { name = "pygments" },
+    { name = "pygobject-stubs" },
+    { name = "pyicu" },
+    { name = "pylint" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-django" },
+    { name = "pytest-github-actions-annotate-failures" },
+    { name = "pytest-profiling" },
+    { name = "pytest-xdist" },
+    { name = "responses" },
+    { name = "respx" },
+    { name = "reuse" },
+    { name = "scour" },
+    { name = "selenium" },
+    { name = "sphinx" },
+    { name = "sphinx-copybutton" },
+    { name = "sphinx-jsonschema" },
+    { name = "sphinx-reredirects" },
+    { name = "sphinxcontrib-httpdomain" },
+    { name = "sphinxext-opengraph" },
+    { name = "standardwebhooks" },
+    { name = "tinyunicodeblock" },
+    { name = "types-dateparser" },
+    { name = "types-docutils" },
+    { name = "types-jsonschema" },
+    { name = "types-lxml" },
+    { name = "types-openpyxl" },
+    { name = "types-pillow" },
+    { name = "types-python-dateutil" },
+    { name = "types-regex" },
+    { name = "types-requests" },
+    { name = "types-setuptools" },
+    { name = "weblate-fonts" },
+]
+docs = [
+    { name = "furo" },
+    { name = "jinja2" },
+    { name = "matplotlib" },
+    { name = "pillow" },
+    { name = "pygments" },
+    { name = "sphinx" },
+    { name = "sphinx-copybutton" },
+    { name = "sphinx-jsonschema" },
+    { name = "sphinx-reredirects" },
+    { name = "sphinxcontrib-httpdomain" },
+    { name = "sphinxext-opengraph" },
+    { name = "weblate-fonts" },
+]
+lint = [
+    { name = "prek" },
+    { name = "pylint" },
+]
+pre-commit = [
+    { name = "prek" },
+]
+pylint = [
+    { name = "pylint" },
+]
+schemas = [
+    { name = "weblate-schemas" },
+]
+scripts = [
+    { name = "django-debug-toolbar" },
+    { name = "pyicu" },
+    { name = "reuse" },
+    { name = "scour" },
+    { name = "tinyunicodeblock" },
+]
+test = [
+    { name = "coverage" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-django" },
+    { name = "pytest-github-actions-annotate-failures" },
+    { name = "pytest-profiling" },
+    { name = "pytest-xdist" },
+    { name = "responses" },
+    { name = "respx" },
+    { name = "selenium" },
+    { name = "standardwebhooks" },
+]
+types = [
+    { name = "boto3-stubs" },
+    { name = "celery-types" },
+    { name = "django-stubs", extra = ["compatible-mypy"] },
+    { name = "django-stubs-ext" },
+    { name = "djangorestframework-stubs" },
+    { name = "mypy" },
+    { name = "pygobject-stubs" },
+    { name = "types-dateparser" },
+    { name = "types-docutils" },
+    { name = "types-jsonschema" },
+    { name = "types-lxml" },
+    { name = "types-openpyxl" },
+    { name = "types-pillow" },
+    { name = "types-python-dateutil" },
+    { name = "types-regex" },
+    { name = "types-requests" },
+    { name = "types-setuptools" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "aeidon", specifier = ">=1.15,<1.16" },
+    { name = "ahocorasick-rs", specifier = ">=0.22.0,<1.1.0" },
+    { name = "aliyun-python-sdk-alimt", marker = "extra == 'alibaba'", specifier = ">=3.2.0,<4.0.0" },
+    { name = "aliyun-python-sdk-core", marker = "extra == 'alibaba'", specifier = ">=2.16.0,<3.0.0" },
+    { name = "altcha", specifier = ">=0.2.0,<1.1" },
+    { name = "boost-weblate", extras = ["alibaba", "amazon", "gerrit", "gelf", "google", "ldap", "mercurial", "openai", "postgres", "zxcvbn"], marker = "extra == 'all'" },
+    { name = "borgbackup", specifier = ">=1.4.0,<1.5" },
+    { name = "boto3", marker = "extra == 'amazon'", specifier = ">=1.38.0,<2.0" },
+    { name = "celery", extras = ["redis"], specifier = ">=5.5.3,<5.7" },
+    { name = "certifi", specifier = ">=2026.2.25" },
+    { name = "charset-normalizer", specifier = ">=3.4.0,<4.0" },
+    { name = "confusable-homoglyphs", specifier = ">=3.3.1,<3.4" },
+    { name = "crispy-bootstrap3", specifier = "==2024.1" },
+    { name = "crispy-bootstrap5", specifier = "==2025.6" },
+    { name = "cryptography", specifier = ">=45.0.1" },
+    { name = "cssselect", specifier = ">=1.3.0,<1.5" },
+    { name = "cyrtranslit", specifier = ">=1.2.0,<1.3.0" },
+    { name = "cython", specifier = ">=3.1.0,<3.3" },
+    { name = "dateparser", specifier = ">=1.2.0,<1.4.0" },
+    { name = "diff-match-patch", specifier = "==20241021" },
+    { name = "disposable-email-domains", specifier = ">=0.0.125" },
+    { name = "django", extras = ["argon2"], specifier = ">=5.2,<6.1" },
+    { name = "django-appconf", specifier = ">=1.1.0,<1.3" },
+    { name = "django-auth-ldap", marker = "extra == 'ldap'", specifier = ">=4.6.0,<6.0.0" },
+    { name = "django-celery-beat", specifier = ">=2.8.0,<2.9" },
+    { name = "django-compressor", specifier = ">=4.5.1,<5" },
+    { name = "django-cors-headers", specifier = ">=4.7.0,<4.10" },
+    { name = "django-crispy-forms", specifier = ">=2.4,<2.6" },
+    { name = "django-filter", specifier = ">=24.3,<25.3" },
+    { name = "django-otp", specifier = ">=1.7.0,<2.0" },
+    { name = "django-otp-webauthn", specifier = ">=0.6.0,<0.9" },
+    { name = "django-redis", specifier = ">=6.0.0,<6.1" },
+    { name = "django-zxcvbn-password-validator", marker = "extra == 'zxcvbn'", specifier = ">=1.4.5,<1.6" },
+    { name = "djangorestframework", specifier = ">=3.16.0,<3.17" },
+    { name = "djangorestframework-csv", specifier = ">=3.0.2,<3.1" },
+    { name = "djangosaml2idp", marker = "extra == 'saml2idp'", specifier = "==0.7.2" },
+    { name = "docutils", specifier = ">=0.21.2,<0.23" },
+    { name = "drf-spectacular", extras = ["sidecar"], specifier = ">=0.28.0,<0.30" },
+    { name = "drf-standardized-errors", extras = ["openapi"], specifier = ">=0.14.1,<0.16" },
+    { name = "fedora-messaging", specifier = ">=3.9.0,<4.0" },
+    { name = "filelock", specifier = ">=3.18.0,<4" },
+    { name = "fluent-syntax", specifier = ">=0.19.0,<0.20" },
+    { name = "git-review", marker = "extra == 'gerrit'", specifier = ">=2.4.0,<2.6.0" },
+    { name = "gitpython", specifier = ">=3.1.43,<3.2" },
+    { name = "google-cloud-storage", marker = "extra == 'google'", specifier = ">=3.4.0,<3.10" },
+    { name = "google-cloud-translate", marker = "extra == 'google'", specifier = ">=3.21.0,<4.0" },
+    { name = "granian", marker = "extra == 'wsgi'", specifier = "==2.7.2" },
+    { name = "hiredis", specifier = ">=3.1.0,<3.4" },
+    { name = "html2text", specifier = ">=2025.4.15,<2025.4.16" },
+    { name = "iniparse", specifier = "==0.5" },
+    { name = "jsonschema", specifier = ">=4.24.0,<5" },
+    { name = "logging-gelf", marker = "extra == 'gelf'", specifier = ">=0.0.32,<0.1" },
+    { name = "lxml", specifier = ">=5.4.0,<6.1" },
+    { name = "mercurial", marker = "extra == 'mercurial'", specifier = ">=6.8.0,<7.3" },
+    { name = "mistletoe", specifier = ">=1.4.0,<1.6" },
+    { name = "mysqlclient", marker = "extra == 'mysql'", specifier = ">=2.1.1,<3" },
+    { name = "nh3", specifier = ">=0.2.20,<0.4" },
+    { name = "openai", marker = "extra == 'openai'", specifier = ">=2.0,<3.0" },
+    { name = "openpyxl", specifier = ">=3.1.5,<3.2" },
+    { name = "packaging", specifier = ">=25,<27" },
+    { name = "phply", specifier = ">=1.2.6,<1.3" },
+    { name = "pillow", specifier = ">=11.0.0,<13" },
+    { name = "psycopg", extras = ["binary"], marker = "extra == 'postgres'", specifier = ">=3.2.11,<3.4" },
+    { name = "pyaskalono", specifier = ">=0.2.0,<0.3.0" },
+    { name = "pycairo", specifier = ">=1.20.0" },
+    { name = "pygments", specifier = ">=2.19.0,<3.0" },
+    { name = "pygobject", specifier = ">=3.54.5,<3.55.0" },
+    { name = "pyicumessageformat", specifier = ">=1.0.0,<1.1" },
+    { name = "pyparsing", specifier = ">=3.2.0,<3.4" },
+    { name = "python-dateutil", specifier = ">=2.9.0.post0" },
+    { name = "python3-saml", marker = "extra == 'saml'", specifier = ">=1.16.0" },
+    { name = "qrcode", specifier = ">=8.2,<8.3" },
+    { name = "rapidfuzz", specifier = ">=3.12.1,<3.15" },
+    { name = "redis", specifier = ">=5.2.0,<8.0.0" },
+    { name = "regex", specifier = ">=2024.11.6,<2027" },
+    { name = "requests", specifier = ">=2.32.2,<2.33" },
+    { name = "ruamel-yaml", specifier = ">=0.18.0,<0.20.0" },
+    { name = "sentry-sdk", specifier = ">=2.28.0,<3.0" },
+    { name = "siphashc", specifier = ">=2.5,<3.0" },
+    { name = "social-auth-app-django", specifier = ">=5.5.1,<6.0.0" },
+    { name = "social-auth-core", specifier = ">=4.7.0,<5.0.0" },
+    { name = "tesserocr", specifier = ">=2.8.0,<2.11.0" },
+    { name = "translate-toolkit", extras = ["toml"], specifier = ">=3.19.2,<3.20" },
+    { name = "translation-finder", specifier = ">=2.22,<3.0" },
+    { name = "unidecode", specifier = ">=1.4.0,<1.5" },
+    { name = "urllib3", extras = ["brotli", "zstd"], specifier = ">=2.6.3,<3.0" },
+    { name = "user-agents", specifier = ">=2.2.0,<2.3" },
+    { name = "weblate-fonts", specifier = "==2026.1" },
+    { name = "weblate-language-data", specifier = ">=2026.3" },
+    { name = "weblate-schemas", specifier = "==2025.6" },
+    { name = "wlhosted", marker = "extra == 'wlhosted'" },
+    { name = "wllegal", marker = "extra == 'wllegal'", specifier = ">=2026.2" },
+]
+provides-extras = ["alibaba", "all", "amazon", "gelf", "gerrit", "google", "ldap", "mercurial", "mysql", "openai", "postgres", "saml", "saml2idp", "wlhosted", "wllegal", "wsgi", "zxcvbn"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "boto3-stubs", specifier = "==1.42.57" },
+    { name = "celery-types", specifier = "==0.24.0" },
+    { name = "coverage", specifier = "==7.13.4" },
+    { name = "django-debug-toolbar", specifier = "==6.2.0" },
+    { name = "django-stubs", extras = ["compatible-mypy"], specifier = "==5.2.9" },
+    { name = "django-stubs-ext", specifier = "==5.2.9" },
+    { name = "djangorestframework-stubs", specifier = "==3.16.8" },
+    { name = "furo", specifier = "==2025.12.19" },
+    { name = "jinja2", specifier = "==3.1.6" },
+    { name = "matplotlib", specifier = "==3.10.8" },
+    { name = "mypy", specifier = "==1.19.1" },
+    { name = "pillow", specifier = ">=11.0.0,<13" },
+    { name = "prek", specifier = "==0.3.3" },
+    { name = "pygments", specifier = ">=2.19.0,<3.0" },
+    { name = "pygobject-stubs", specifier = "==2.16.0" },
+    { name = "pyicu", specifier = "==2.16.1" },
+    { name = "pylint", specifier = "==4.0.5" },
+    { name = "pytest", specifier = "==9.0.2" },
+    { name = "pytest-cov", specifier = "==7.0.0" },
+    { name = "pytest-django", specifier = "==4.12.0" },
+    { name = "pytest-github-actions-annotate-failures", specifier = "==0.3.0" },
+    { name = "pytest-profiling", specifier = "==1.8.1" },
+    { name = "pytest-xdist", specifier = "==3.8.0" },
+    { name = "responses", specifier = "==0.26.0" },
+    { name = "respx", specifier = "==0.22.0" },
+    { name = "reuse", specifier = "==6.2.0" },
+    { name = "scour", specifier = "==0.38.2" },
+    { name = "selenium", specifier = "==4.41.0" },
+    { name = "sphinx", specifier = "==8.2.3" },
+    { name = "sphinx-copybutton", specifier = "==0.5.2" },
+    { name = "sphinx-jsonschema", specifier = "==1.19.2" },
+    { name = "sphinx-reredirects", specifier = "==1.1.0" },
+    { name = "sphinxcontrib-httpdomain", specifier = "==2.0.0" },
+    { name = "sphinxext-opengraph", specifier = "==0.13.0" },
+    { name = "standardwebhooks", specifier = "==1.0.1" },
+    { name = "tinyunicodeblock", specifier = "==1.3" },
+    { name = "types-dateparser", specifier = "==1.3.0.20260211" },
+    { name = "types-docutils", specifier = "==0.22.3.20260223" },
+    { name = "types-jsonschema", specifier = "==4.26.0.20260202" },
+    { name = "types-lxml", specifier = "==2026.2.16" },
+    { name = "types-openpyxl", specifier = "==3.1.5.20250919" },
+    { name = "types-pillow", specifier = "==10.2.0.20240822" },
+    { name = "types-python-dateutil", specifier = "==2.9.0.20260124" },
+    { name = "types-regex", specifier = "==2026.2.19.20260221" },
+    { name = "types-requests", specifier = "==2.32.4.20260107" },
+    { name = "types-setuptools", specifier = "==82.0.0.20260210" },
+    { name = "weblate-fonts", specifier = "==2026.1" },
+]
+docs = [
+    { name = "furo", specifier = "==2025.12.19" },
+    { name = "jinja2", specifier = "==3.1.6" },
+    { name = "matplotlib", specifier = "==3.10.8" },
+    { name = "pillow", specifier = ">=11.0.0,<13" },
+    { name = "pygments", specifier = ">=2.19.0,<3.0" },
+    { name = "sphinx", specifier = "==8.2.3" },
+    { name = "sphinx-copybutton", specifier = "==0.5.2" },
+    { name = "sphinx-jsonschema", specifier = "==1.19.2" },
+    { name = "sphinx-reredirects", specifier = "==1.1.0" },
+    { name = "sphinxcontrib-httpdomain", specifier = "==2.0.0" },
+    { name = "sphinxext-opengraph", specifier = "==0.13.0" },
+    { name = "weblate-fonts", specifier = "==2026.1" },
+]
+lint = [
+    { name = "prek", specifier = "==0.3.3" },
+    { name = "pylint", specifier = "==4.0.5" },
+]
+pre-commit = [{ name = "prek", specifier = "==0.3.3" }]
+pylint = [{ name = "pylint", specifier = "==4.0.5" }]
+schemas = [{ name = "weblate-schemas", specifier = "==2025.6" }]
+scripts = [
+    { name = "django-debug-toolbar", specifier = "==6.2.0" },
+    { name = "pyicu", specifier = "==2.16.1" },
+    { name = "reuse", specifier = "==6.2.0" },
+    { name = "scour", specifier = "==0.38.2" },
+    { name = "tinyunicodeblock", specifier = "==1.3" },
+]
+test = [
+    { name = "coverage", specifier = "==7.13.4" },
+    { name = "pytest", specifier = "==9.0.2" },
+    { name = "pytest-cov", specifier = "==7.0.0" },
+    { name = "pytest-django", specifier = "==4.12.0" },
+    { name = "pytest-github-actions-annotate-failures", specifier = "==0.3.0" },
+    { name = "pytest-profiling", specifier = "==1.8.1" },
+    { name = "pytest-xdist", specifier = "==3.8.0" },
+    { name = "responses", specifier = "==0.26.0" },
+    { name = "respx", specifier = "==0.22.0" },
+    { name = "selenium", specifier = "==4.41.0" },
+    { name = "standardwebhooks", specifier = "==1.0.1" },
+]
+types = [
+    { name = "boto3-stubs", specifier = "==1.42.57" },
+    { name = "celery-types", specifier = "==0.24.0" },
+    { name = "django-stubs", extras = ["compatible-mypy"], specifier = "==5.2.9" },
+    { name = "django-stubs-ext", specifier = "==5.2.9" },
+    { name = "djangorestframework-stubs", specifier = "==3.16.8" },
+    { name = "mypy", specifier = "==1.19.1" },
+    { name = "pygobject-stubs", specifier = "==2.16.0" },
+    { name = "types-dateparser", specifier = "==1.3.0.20260211" },
+    { name = "types-docutils", specifier = "==0.22.3.20260223" },
+    { name = "types-jsonschema", specifier = "==4.26.0.20260202" },
+    { name = "types-lxml", specifier = "==2026.2.16" },
+    { name = "types-openpyxl", specifier = "==3.1.5.20250919" },
+    { name = "types-pillow", specifier = "==10.2.0.20240822" },
+    { name = "types-python-dateutil", specifier = "==2.9.0.20260124" },
+    { name = "types-regex", specifier = "==2026.2.19.20260221" },
+    { name = "types-requests", specifier = "==2.32.4.20260107" },
+    { name = "types-setuptools", specifier = "==82.0.0.20260210" },
+]
+
+[[package]]
 name = "borgbackup"
 version = "1.4.3"
 source = { registry = "https://pypi.org/simple" }
@@ -443,6 +914,11 @@ dependencies = [
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/84/85/57c314a6b35336efbbdc13e5fc9ae13f6b60a0647cfa7c1221178ac6d8ae/brotlicffi-1.2.0.0.tar.gz", hash = "sha256:34345d8d1f9d534fcac2249e57a4c3c8801a33c9942ff9f8574f67a175e17adb", size = 476682, upload-time = "2025-11-21T18:17:57.334Z" }
 wheels = [
+    { url = "https://files.pythonhosted.org/packages/7c/87/ba6298c3d7f8d66ce80d7a487f2a487ebae74a79c6049c7c2990178ce529/brotlicffi-1.2.0.0-cp314-cp314t-macosx_11_0_arm64.whl", hash = "sha256:b13fb476a96f02e477a506423cb5e7bc21e0e3ac4c060c20ba31c44056e38c68", size = 433038, upload-time = "2026-03-05T17:57:37.96Z" },
+    { url = "https://files.pythonhosted.org/packages/00/49/16c7a77d1cae0519953ef0389a11a9c2e2e62e87d04f8e7afbae40124255/brotlicffi-1.2.0.0-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:17db36fb581f7b951635cd6849553a95c6f2f53c1a707817d06eae5aeff5f6af", size = 1541124, upload-time = "2026-03-05T17:57:39.488Z" },
+    { url = "https://files.pythonhosted.org/packages/e8/17/fab2c36ea820e2288f8c1bf562de1b6cd9f30e28d66f1ce2929a4baff6de/brotlicffi-1.2.0.0-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:40190192790489a7b054312163d0ce82b07d1b6e706251036898ce1684ef12e9", size = 1541983, upload-time = "2026-03-05T17:57:41.061Z" },
+    { url = "https://files.pythonhosted.org/packages/78/c9/849a669b3b3bb8ac96005cdef04df4db658c33443a7fc704a6d4a2f07a56/brotlicffi-1.2.0.0-cp314-cp314t-win32.whl", hash = "sha256:a8079e8ecc32ecef728036a1d9b7105991ce6a5385cf51ee8c02297c90fb08c2", size = 349046, upload-time = "2026-03-05T17:57:42.76Z" },
+    { url = "https://files.pythonhosted.org/packages/a4/25/09c0fd21cfc451fa38ad538f4d18d8be566746531f7f27143f63f8c45a9f/brotlicffi-1.2.0.0-cp314-cp314t-win_amd64.whl", hash = "sha256:ca90c4266704ca0a94de8f101b4ec029624273380574e4cf19301acfa46c61a0", size = 385653, upload-time = "2026-03-05T17:57:44.224Z" },
     { url = "https://files.pythonhosted.org/packages/e4/df/a72b284d8c7bef0ed5756b41c2eb7d0219a1dd6ac6762f1c7bdbc31ef3af/brotlicffi-1.2.0.0-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:9458d08a7ccde8e3c0afedbf2c70a8263227a68dea5ab13590593f4c0a4fd5f4", size = 432340, upload-time = "2025-11-21T18:17:42.277Z" },
     { url = "https://files.pythonhosted.org/packages/74/2b/cc55a2d1d6fb4f5d458fba44a3d3f91fb4320aa14145799fd3a996af0686/brotlicffi-1.2.0.0-cp38-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:84e3d0020cf1bd8b8131f4a07819edee9f283721566fe044a20ec792ca8fd8b7", size = 1534002, upload-time = "2025-11-21T18:17:43.746Z" },
     { url = "https://files.pythonhosted.org/packages/e4/9c/d51486bf366fc7d6735f0e46b5b96ca58dc005b250263525a1eea3cd5d21/brotlicffi-1.2.0.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:33cfb408d0cff64cd50bef268c0fed397c46fbb53944aa37264148614a62e990", size = 1536547, upload-time = "2025-11-21T18:17:45.729Z" },
@@ -5119,7 +5595,7 @@ wheels = [
 [[package]]
 name = "weblate"
 version = "5.16.1"
-source = { editable = "." }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aeidon" },
     { name = "ahocorasick-rs" },
@@ -5195,396 +5671,9 @@ dependencies = [
     { name = "weblate-language-data" },
     { name = "weblate-schemas" },
 ]
-
-[package.optional-dependencies]
-alibaba = [
-    { name = "aliyun-python-sdk-alimt" },
-    { name = "aliyun-python-sdk-core" },
-]
-all = [
-    { name = "aliyun-python-sdk-alimt" },
-    { name = "aliyun-python-sdk-core" },
-    { name = "boto3" },
-    { name = "django-auth-ldap" },
-    { name = "django-zxcvbn-password-validator" },
-    { name = "git-review" },
-    { name = "google-cloud-storage" },
-    { name = "google-cloud-translate" },
-    { name = "logging-gelf" },
-    { name = "mercurial" },
-    { name = "openai" },
-    { name = "psycopg", extra = ["binary"] },
-]
-amazon = [
-    { name = "boto3" },
-]
-gelf = [
-    { name = "logging-gelf" },
-]
-gerrit = [
-    { name = "git-review" },
-]
-google = [
-    { name = "google-cloud-storage" },
-    { name = "google-cloud-translate" },
-]
-ldap = [
-    { name = "django-auth-ldap" },
-]
-mercurial = [
-    { name = "mercurial" },
-]
-mysql = [
-    { name = "mysqlclient" },
-]
-openai = [
-    { name = "openai" },
-]
-postgres = [
-    { name = "psycopg", extra = ["binary"] },
-]
-saml = [
-    { name = "python3-saml" },
-]
-saml2idp = [
-    { name = "djangosaml2idp" },
-]
-wlhosted = [
-    { name = "wlhosted" },
-]
-wllegal = [
-    { name = "wllegal" },
-]
-wsgi = [
-    { name = "granian" },
-]
-zxcvbn = [
-    { name = "django-zxcvbn-password-validator" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "boto3-stubs" },
-    { name = "celery-types" },
-    { name = "coverage" },
-    { name = "django-debug-toolbar" },
-    { name = "django-stubs", extra = ["compatible-mypy"] },
-    { name = "django-stubs-ext" },
-    { name = "djangorestframework-stubs" },
-    { name = "furo" },
-    { name = "jinja2" },
-    { name = "matplotlib" },
-    { name = "mypy" },
-    { name = "pillow" },
-    { name = "prek" },
-    { name = "pygments" },
-    { name = "pygobject-stubs" },
-    { name = "pyicu" },
-    { name = "pylint" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-django" },
-    { name = "pytest-github-actions-annotate-failures" },
-    { name = "pytest-profiling" },
-    { name = "pytest-xdist" },
-    { name = "responses" },
-    { name = "respx" },
-    { name = "reuse" },
-    { name = "scour" },
-    { name = "selenium" },
-    { name = "sphinx" },
-    { name = "sphinx-copybutton" },
-    { name = "sphinx-jsonschema" },
-    { name = "sphinx-reredirects" },
-    { name = "sphinxcontrib-httpdomain" },
-    { name = "sphinxext-opengraph" },
-    { name = "standardwebhooks" },
-    { name = "tinyunicodeblock" },
-    { name = "types-dateparser" },
-    { name = "types-docutils" },
-    { name = "types-jsonschema" },
-    { name = "types-lxml" },
-    { name = "types-openpyxl" },
-    { name = "types-pillow" },
-    { name = "types-python-dateutil" },
-    { name = "types-regex" },
-    { name = "types-requests" },
-    { name = "types-setuptools" },
-    { name = "weblate-fonts" },
-]
-docs = [
-    { name = "furo" },
-    { name = "jinja2" },
-    { name = "matplotlib" },
-    { name = "pillow" },
-    { name = "pygments" },
-    { name = "sphinx" },
-    { name = "sphinx-copybutton" },
-    { name = "sphinx-jsonschema" },
-    { name = "sphinx-reredirects" },
-    { name = "sphinxcontrib-httpdomain" },
-    { name = "sphinxext-opengraph" },
-    { name = "weblate-fonts" },
-]
-lint = [
-    { name = "prek" },
-    { name = "pylint" },
-]
-pre-commit = [
-    { name = "prek" },
-]
-pylint = [
-    { name = "pylint" },
-]
-schemas = [
-    { name = "weblate-schemas" },
-]
-scripts = [
-    { name = "django-debug-toolbar" },
-    { name = "pyicu" },
-    { name = "reuse" },
-    { name = "scour" },
-    { name = "tinyunicodeblock" },
-]
-test = [
-    { name = "coverage" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-django" },
-    { name = "pytest-github-actions-annotate-failures" },
-    { name = "pytest-profiling" },
-    { name = "pytest-xdist" },
-    { name = "responses" },
-    { name = "respx" },
-    { name = "selenium" },
-    { name = "standardwebhooks" },
-]
-types = [
-    { name = "boto3-stubs" },
-    { name = "celery-types" },
-    { name = "django-stubs", extra = ["compatible-mypy"] },
-    { name = "django-stubs-ext" },
-    { name = "djangorestframework-stubs" },
-    { name = "mypy" },
-    { name = "pygobject-stubs" },
-    { name = "types-dateparser" },
-    { name = "types-docutils" },
-    { name = "types-jsonschema" },
-    { name = "types-lxml" },
-    { name = "types-openpyxl" },
-    { name = "types-pillow" },
-    { name = "types-python-dateutil" },
-    { name = "types-regex" },
-    { name = "types-requests" },
-    { name = "types-setuptools" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "aeidon", specifier = ">=1.15,<1.16" },
-    { name = "ahocorasick-rs", specifier = ">=0.22.0,<1.1.0" },
-    { name = "aliyun-python-sdk-alimt", marker = "extra == 'alibaba'", specifier = ">=3.2.0,<4.0.0" },
-    { name = "aliyun-python-sdk-core", marker = "extra == 'alibaba'", specifier = ">=2.16.0,<3.0.0" },
-    { name = "altcha", specifier = ">=0.2.0,<1.1" },
-    { name = "borgbackup", specifier = ">=1.4.0,<1.5" },
-    { name = "boto3", marker = "extra == 'amazon'", specifier = ">=1.38.0,<2.0" },
-    { name = "celery", extras = ["redis"], specifier = ">=5.5.3,<5.7" },
-    { name = "certifi", specifier = ">=2026.2.25" },
-    { name = "charset-normalizer", specifier = ">=3.4.0,<4.0" },
-    { name = "confusable-homoglyphs", specifier = ">=3.3.1,<3.4" },
-    { name = "crispy-bootstrap3", specifier = "==2024.1" },
-    { name = "crispy-bootstrap5", specifier = "==2025.6" },
-    { name = "cryptography", specifier = ">=45.0.1" },
-    { name = "cssselect", specifier = ">=1.3.0,<1.5" },
-    { name = "cyrtranslit", specifier = ">=1.2.0,<1.3.0" },
-    { name = "cython", specifier = ">=3.1.0,<3.3" },
-    { name = "dateparser", specifier = ">=1.2.0,<1.4.0" },
-    { name = "diff-match-patch", specifier = "==20241021" },
-    { name = "disposable-email-domains", specifier = ">=0.0.125" },
-    { name = "django", extras = ["argon2"], specifier = ">=5.2,<6.1" },
-    { name = "django-appconf", specifier = ">=1.1.0,<1.3" },
-    { name = "django-auth-ldap", marker = "extra == 'ldap'", specifier = ">=4.6.0,<6.0.0" },
-    { name = "django-celery-beat", specifier = ">=2.8.0,<2.9" },
-    { name = "django-compressor", specifier = ">=4.5.1,<5" },
-    { name = "django-cors-headers", specifier = ">=4.7.0,<4.10" },
-    { name = "django-crispy-forms", specifier = ">=2.4,<2.6" },
-    { name = "django-filter", specifier = ">=24.3,<25.3" },
-    { name = "django-otp", specifier = ">=1.7.0,<2.0" },
-    { name = "django-otp-webauthn", specifier = ">=0.6.0,<0.9" },
-    { name = "django-redis", specifier = ">=6.0.0,<6.1" },
-    { name = "django-zxcvbn-password-validator", marker = "extra == 'zxcvbn'", specifier = ">=1.4.5,<1.6" },
-    { name = "djangorestframework", specifier = ">=3.16.0,<3.17" },
-    { name = "djangorestframework-csv", specifier = ">=3.0.2,<3.1" },
-    { name = "djangosaml2idp", marker = "extra == 'saml2idp'", specifier = "==0.7.2" },
-    { name = "docutils", specifier = ">=0.21.2,<0.23" },
-    { name = "drf-spectacular", extras = ["sidecar"], specifier = ">=0.28.0,<0.30" },
-    { name = "drf-standardized-errors", extras = ["openapi"], specifier = ">=0.14.1,<0.16" },
-    { name = "fedora-messaging", specifier = ">=3.9.0,<4.0" },
-    { name = "filelock", specifier = ">=3.18.0,<4" },
-    { name = "fluent-syntax", specifier = ">=0.19.0,<0.20" },
-    { name = "git-review", marker = "extra == 'gerrit'", specifier = ">=2.4.0,<2.6.0" },
-    { name = "gitpython", specifier = ">=3.1.43,<3.2" },
-    { name = "google-cloud-storage", marker = "extra == 'google'", specifier = ">=3.4.0,<3.10" },
-    { name = "google-cloud-translate", marker = "extra == 'google'", specifier = ">=3.21.0,<4.0" },
-    { name = "granian", marker = "extra == 'wsgi'", specifier = "==2.7.2" },
-    { name = "hiredis", specifier = ">=3.1.0,<3.4" },
-    { name = "html2text", specifier = ">=2025.4.15,<2025.4.16" },
-    { name = "iniparse", specifier = "==0.5" },
-    { name = "jsonschema", specifier = ">=4.24.0,<5" },
-    { name = "logging-gelf", marker = "extra == 'gelf'", specifier = ">=0.0.32,<0.1" },
-    { name = "lxml", specifier = ">=5.4.0,<6.1" },
-    { name = "mercurial", marker = "extra == 'mercurial'", specifier = ">=6.8.0,<7.3" },
-    { name = "mistletoe", specifier = ">=1.4.0,<1.6" },
-    { name = "mysqlclient", marker = "extra == 'mysql'", specifier = ">=2.1.1,<3" },
-    { name = "nh3", specifier = ">=0.2.20,<0.4" },
-    { name = "openai", marker = "extra == 'openai'", specifier = ">=2.0,<3.0" },
-    { name = "openpyxl", specifier = ">=3.1.5,<3.2" },
-    { name = "packaging", specifier = ">=25,<27" },
-    { name = "phply", specifier = ">=1.2.6,<1.3" },
-    { name = "pillow", specifier = ">=11.0.0,<13" },
-    { name = "psycopg", extras = ["binary"], marker = "extra == 'postgres'", specifier = ">=3.2.11,<3.4" },
-    { name = "pyaskalono", specifier = ">=0.2.0,<0.3.0" },
-    { name = "pycairo", specifier = ">=1.20.0" },
-    { name = "pygments", specifier = ">=2.19.0,<3.0" },
-    { name = "pygobject", specifier = ">=3.54.5,<3.55.0" },
-    { name = "pyicumessageformat", specifier = ">=1.0.0,<1.1" },
-    { name = "pyparsing", specifier = ">=3.2.0,<3.4" },
-    { name = "python-dateutil", specifier = ">=2.9.0.post0" },
-    { name = "python3-saml", marker = "extra == 'saml'", specifier = ">=1.16.0" },
-    { name = "qrcode", specifier = ">=8.2,<8.3" },
-    { name = "rapidfuzz", specifier = ">=3.12.1,<3.15" },
-    { name = "redis", specifier = ">=5.2.0,<8.0.0" },
-    { name = "regex", specifier = ">=2024.11.6,<2027" },
-    { name = "requests", specifier = ">=2.32.2,<2.33" },
-    { name = "ruamel-yaml", specifier = ">=0.18.0,<0.20.0" },
-    { name = "sentry-sdk", specifier = ">=2.28.0,<3.0" },
-    { name = "siphashc", specifier = ">=2.5,<3.0" },
-    { name = "social-auth-app-django", specifier = ">=5.5.1,<6.0.0" },
-    { name = "social-auth-core", specifier = ">=4.7.0,<5.0.0" },
-    { name = "tesserocr", specifier = ">=2.8.0,<2.11.0" },
-    { name = "translate-toolkit", extras = ["toml"], specifier = ">=3.19.2,<3.20" },
-    { name = "translation-finder", specifier = ">=2.22,<3.0" },
-    { name = "unidecode", specifier = ">=1.4.0,<1.5" },
-    { name = "urllib3", extras = ["brotli", "zstd"], specifier = ">=2.6.3,<3.0" },
-    { name = "user-agents", specifier = ">=2.2.0,<2.3" },
-    { name = "weblate", extras = ["alibaba", "amazon", "gerrit", "gelf", "google", "ldap", "mercurial", "openai", "postgres", "zxcvbn"], marker = "extra == 'all'" },
-    { name = "weblate-fonts", specifier = "==2026.1" },
-    { name = "weblate-language-data", specifier = ">=2026.3" },
-    { name = "weblate-schemas", specifier = "==2025.6" },
-    { name = "wlhosted", marker = "extra == 'wlhosted'" },
-    { name = "wllegal", marker = "extra == 'wllegal'", specifier = ">=2026.2" },
-]
-provides-extras = ["alibaba", "all", "amazon", "gelf", "gerrit", "google", "ldap", "mercurial", "mysql", "openai", "postgres", "saml", "saml2idp", "wlhosted", "wllegal", "wsgi", "zxcvbn"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "boto3-stubs", specifier = "==1.42.57" },
-    { name = "celery-types", specifier = "==0.24.0" },
-    { name = "coverage", specifier = "==7.13.4" },
-    { name = "django-debug-toolbar", specifier = "==6.2.0" },
-    { name = "django-stubs", extras = ["compatible-mypy"], specifier = "==5.2.9" },
-    { name = "django-stubs-ext", specifier = "==5.2.9" },
-    { name = "djangorestframework-stubs", specifier = "==3.16.8" },
-    { name = "furo", specifier = "==2025.12.19" },
-    { name = "jinja2", specifier = "==3.1.6" },
-    { name = "matplotlib", specifier = "==3.10.8" },
-    { name = "mypy", specifier = "==1.19.1" },
-    { name = "pillow", specifier = ">=11.0.0,<13" },
-    { name = "prek", specifier = "==0.3.3" },
-    { name = "pygments", specifier = ">=2.19.0,<3.0" },
-    { name = "pygobject-stubs", specifier = "==2.16.0" },
-    { name = "pyicu", specifier = "==2.16.1" },
-    { name = "pylint", specifier = "==4.0.5" },
-    { name = "pytest", specifier = "==9.0.2" },
-    { name = "pytest-cov", specifier = "==7.0.0" },
-    { name = "pytest-django", specifier = "==4.12.0" },
-    { name = "pytest-github-actions-annotate-failures", specifier = "==0.3.0" },
-    { name = "pytest-profiling", specifier = "==1.8.1" },
-    { name = "pytest-xdist", specifier = "==3.8.0" },
-    { name = "responses", specifier = "==0.26.0" },
-    { name = "respx", specifier = "==0.22.0" },
-    { name = "reuse", specifier = "==6.2.0" },
-    { name = "scour", specifier = "==0.38.2" },
-    { name = "selenium", specifier = "==4.41.0" },
-    { name = "sphinx", specifier = "==8.2.3" },
-    { name = "sphinx-copybutton", specifier = "==0.5.2" },
-    { name = "sphinx-jsonschema", specifier = "==1.19.2" },
-    { name = "sphinx-reredirects", specifier = "==1.1.0" },
-    { name = "sphinxcontrib-httpdomain", specifier = "==2.0.0" },
-    { name = "sphinxext-opengraph", specifier = "==0.13.0" },
-    { name = "standardwebhooks", specifier = "==1.0.1" },
-    { name = "tinyunicodeblock", specifier = "==1.3" },
-    { name = "types-dateparser", specifier = "==1.3.0.20260211" },
-    { name = "types-docutils", specifier = "==0.22.3.20260223" },
-    { name = "types-jsonschema", specifier = "==4.26.0.20260202" },
-    { name = "types-lxml", specifier = "==2026.2.16" },
-    { name = "types-openpyxl", specifier = "==3.1.5.20250919" },
-    { name = "types-pillow", specifier = "==10.2.0.20240822" },
-    { name = "types-python-dateutil", specifier = "==2.9.0.20260124" },
-    { name = "types-regex", specifier = "==2026.2.19.20260221" },
-    { name = "types-requests", specifier = "==2.32.4.20260107" },
-    { name = "types-setuptools", specifier = "==82.0.0.20260210" },
-    { name = "weblate-fonts", specifier = "==2026.1" },
-]
-docs = [
-    { name = "furo", specifier = "==2025.12.19" },
-    { name = "jinja2", specifier = "==3.1.6" },
-    { name = "matplotlib", specifier = "==3.10.8" },
-    { name = "pillow", specifier = ">=11.0.0,<13" },
-    { name = "pygments", specifier = ">=2.19.0,<3.0" },
-    { name = "sphinx", specifier = "==8.2.3" },
-    { name = "sphinx-copybutton", specifier = "==0.5.2" },
-    { name = "sphinx-jsonschema", specifier = "==1.19.2" },
-    { name = "sphinx-reredirects", specifier = "==1.1.0" },
-    { name = "sphinxcontrib-httpdomain", specifier = "==2.0.0" },
-    { name = "sphinxext-opengraph", specifier = "==0.13.0" },
-    { name = "weblate-fonts", specifier = "==2026.1" },
-]
-lint = [
-    { name = "prek", specifier = "==0.3.3" },
-    { name = "pylint", specifier = "==4.0.5" },
-]
-pre-commit = [{ name = "prek", specifier = "==0.3.3" }]
-pylint = [{ name = "pylint", specifier = "==4.0.5" }]
-schemas = [{ name = "weblate-schemas", specifier = "==2025.6" }]
-scripts = [
-    { name = "django-debug-toolbar", specifier = "==6.2.0" },
-    { name = "pyicu", specifier = "==2.16.1" },
-    { name = "reuse", specifier = "==6.2.0" },
-    { name = "scour", specifier = "==0.38.2" },
-    { name = "tinyunicodeblock", specifier = "==1.3" },
-]
-test = [
-    { name = "coverage", specifier = "==7.13.4" },
-    { name = "pytest", specifier = "==9.0.2" },
-    { name = "pytest-cov", specifier = "==7.0.0" },
-    { name = "pytest-django", specifier = "==4.12.0" },
-    { name = "pytest-github-actions-annotate-failures", specifier = "==0.3.0" },
-    { name = "pytest-profiling", specifier = "==1.8.1" },
-    { name = "pytest-xdist", specifier = "==3.8.0" },
-    { name = "responses", specifier = "==0.26.0" },
-    { name = "respx", specifier = "==0.22.0" },
-    { name = "selenium", specifier = "==4.41.0" },
-    { name = "standardwebhooks", specifier = "==1.0.1" },
-]
-types = [
-    { name = "boto3-stubs", specifier = "==1.42.57" },
-    { name = "celery-types", specifier = "==0.24.0" },
-    { name = "django-stubs", extras = ["compatible-mypy"], specifier = "==5.2.9" },
-    { name = "django-stubs-ext", specifier = "==5.2.9" },
-    { name = "djangorestframework-stubs", specifier = "==3.16.8" },
-    { name = "mypy", specifier = "==1.19.1" },
-    { name = "pygobject-stubs", specifier = "==2.16.0" },
-    { name = "types-dateparser", specifier = "==1.3.0.20260211" },
-    { name = "types-docutils", specifier = "==0.22.3.20260223" },
-    { name = "types-jsonschema", specifier = "==4.26.0.20260202" },
-    { name = "types-lxml", specifier = "==2026.2.16" },
-    { name = "types-openpyxl", specifier = "==3.1.5.20250919" },
-    { name = "types-pillow", specifier = "==10.2.0.20240822" },
-    { name = "types-python-dateutil", specifier = "==2.9.0.20260124" },
-    { name = "types-regex", specifier = "==2026.2.19.20260221" },
-    { name = "types-requests", specifier = "==2.32.4.20260107" },
-    { name = "types-setuptools", specifier = "==82.0.0.20260210" },
+sdist = { url = "https://files.pythonhosted.org/packages/64/fa/efa9883e3c983fa40689e8aab93c32b6d9bcc17f1180617a6132c308d400/weblate-5.16.1.tar.gz", hash = "sha256:beed6cc1c239a42935f3fa21af2b4b480cd8ff0733b49ce8866c031a48bcc97f", size = 19129509, upload-time = "2026-02-26T07:13:23.944Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6d/de/390810cbbd768e19f844b0e196d3d62d58c1ad678e4808e3951236e0e02b/weblate-5.16.1-py3-none-any.whl", hash = "sha256:fd3b49ff277ac006c85bb031edc5fa5a425cc149d2b47efd4c8df1e7b5c58aa6", size = 25797521, upload-time = "2026-02-26T07:13:27.84Z" },
 ]
 
 [[package]]

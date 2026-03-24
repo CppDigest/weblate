@@ -146,3 +146,19 @@ path = "client/yarn.lock"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Michal Čihař <michal@weblate.org>"
 SPDX-License-Identifier = "GPL-3.0-or-later"
+
+[[annotations]]
+path = [
+  ".dockerignore",
+  ".github/workflows/cd.yml",
+  "docker/**",
+  "scripts/auto/**",
+  "scripts/backup/backup_from_server.sh",
+  "scripts/backup/dump_database.sh",
+  "scripts/backup/manage_statistics.md",
+  "scripts/backup/restore_to_local.sh",
+  "scripts/README_create_project.md"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Michal Čihař <michal@weblate.org>"
+SPDX-License-Identifier = "GPL-3.0-or-later"

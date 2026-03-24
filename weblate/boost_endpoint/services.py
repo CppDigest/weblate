@@ -26,7 +26,7 @@ import subprocess
 import tempfile
 import time
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any, cast
 
 from django.conf import settings
 from django.contrib.messages import get_messages
@@ -38,6 +38,9 @@ from weblate.logger import LOGGER
 from weblate.trans.models import Component, Project
 from weblate.utils.errors import report_error
 from weblate.vcs.base import RepositoryError
+
+if TYPE_CHECKING:
+    from weblate.lang.models import LanguageQuerySet
 
 # Weblate API limit for component name and slug (Component.name / Component.slug max_length)
 MAX_COMPONENT_NAME_LENGTH = 100
@@ -135,7 +138,13 @@ class BoostComponentService:
         try:
             LOGGER.info("Cloning %s to %s", repo_url, target_dir)
             cmd = ["git", "clone", "-b", branch, "--depth", "1", repo_url, target_dir]
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=300,
+                check=False,
+            )
 
             if result.returncode != 0:
                 LOGGER.error("Failed to clone: %s", result.stderr)
@@ -206,7 +215,7 @@ class BoostComponentService:
         dir_path = path_obj.parent
 
         # Generate component name from path (include extension so doc/intro.adoc vs doc/intro.md differ)
-        component_name_parts = []
+        component_name_parts: list[str] = []
         if str(dir_path) != ".":
             component_name_parts.extend(dir_path.parts)
         component_name_parts.append(filename_base)
@@ -558,7 +567,9 @@ class BoostComponentService:
         # (2) get_all_available_languages() + add_more filter: DB only. Ensure lang_code is in the
         # allowed set (not already in component; if user lacks add_more, restrict to basic/project
         # languages). Fail fast before any I/O so we do not sync when language is not addable.
-        base_languages = component.get_all_available_languages()
+        base_languages = cast(
+            "LanguageQuerySet", component.get_all_available_languages()
+        )
         if not request.user.has_perm("translation.add_more", component):
             base_languages = base_languages.filter_for_add(component.project)
         if not base_languages.filter(pk=language.pk).exists():
@@ -635,8 +646,15 @@ class BoostComponentService:
         name = component.name
         base_path = component.full_path
         repo_owner = component.linked_component if component.is_repo_link else component
-        push_branch = repo_owner.push_branch
-        push_url = repo_owner.push
+        if repo_owner is None:
+            LOGGER.warning(
+                "Cannot push after delete: no linked component for %s", component.slug
+            )
+            push_branch = None
+            push_url = None
+        else:
+            push_branch = repo_owner.push_branch
+            push_url = repo_owner.push
         translation_files = [
             os.path.join(base_path, t.filename)
             for t in component.translation_set.exclude(
@@ -665,7 +683,7 @@ class BoostComponentService:
                 # Stage only the removed files (not all tracked changes)
                 rel_paths = [os.path.relpath(p, base_path) for p in actually_removed]
                 subprocess.run(
-                    ["git", "-C", base_path, "add", "--"] + rel_paths,
+                    ["git", "-C", base_path, "add", "--", *rel_paths],
                     check=True,
                     capture_output=True,
                     timeout=60,
@@ -675,6 +693,7 @@ class BoostComponentService:
                     capture_output=True,
                     text=True,
                     timeout=10,
+                    check=False,
                 )
                 if status.stdout.strip():
                     author = (
@@ -730,7 +749,7 @@ class BoostComponentService:
         if self.temp_dir is None:
             msg = "process_submodule requires temp_dir; call process_all() instead"
             raise TypeError(msg)
-        result = {
+        result: dict[str, Any] = {
             "submodule": submodule,
             "success": False,
             "components_created": 0,
@@ -827,7 +846,7 @@ class BoostComponentService:
         self.temp_dir = tempfile.mkdtemp(prefix="boost_endpoint_")
         LOGGER.info("Using temp directory: %s", self.temp_dir)
 
-        results = {
+        results: dict[str, Any] = {
             "total_submodules": len(submodules),
             "successful": 0,
             "failed": 0,

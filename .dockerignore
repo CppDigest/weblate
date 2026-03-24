@@ -1,0 +1,31 @@
+# VCS (not needed for pip install)
+.git
+.github
+
+# Local data and logs (use container volumes at runtime)
+data
+logs
+notes
+
+# Python envs and caches
+.venv
+venv
+weblate-env
+**/__pycache__
+**/*.py[cod]
+*$py.class
+.pytest_cache
+.mypy_cache
+.ruff_cache
+htmlcov
+.coverage
+*.egg-info
+
+# Editor / IDE
+.cursor
+.idea
+.vscode
+
+# Build / client tooling not used inside the image
+build
+client/node_modules

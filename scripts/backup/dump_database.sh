@@ -8,9 +8,11 @@ OUTPUT_FILE="$HOME/boost-weblate/weblate_backup_$(date +%Y%m%d_%H%M%S).sql"
 
 export PGPASSWORD="weblate"
 
-echo "-- Database dump with ordered tables and rows" > "$OUTPUT_FILE"
-echo "-- Generated: DUMMY_TIMESTAMP" >> "$OUTPUT_FILE"
-echo "" >> "$OUTPUT_FILE"
+{
+    echo "-- Database dump with ordered tables and rows"
+    echo "-- Generated: DUMMY_TIMESTAMP"
+    echo ""
+} > "$OUTPUT_FILE"
 
 # Dump schema only (without data)
 echo "Dumping schema..."
@@ -21,11 +23,13 @@ pg_dump -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" \
     sed 's/\\restrict [^[:space:]]*/\\restrict DUMMY_TOKEN/g' |
     sed 's/\\unrestrict [^[:space:]]*/\\unrestrict DUMMY_TOKEN/g' >> "$OUTPUT_FILE"
 
-echo "" >> "$OUTPUT_FILE"
-echo "-- Data dump with ordered rows" >> "$OUTPUT_FILE"
-echo "-- Disable foreign key checks during data load" >> "$OUTPUT_FILE"
-echo "SET session_replication_role = 'replica';" >> "$OUTPUT_FILE"
-echo "" >> "$OUTPUT_FILE"
+{
+    echo ""
+    echo "-- Data dump with ordered rows"
+    echo "-- Disable foreign key checks during data load"
+    echo "SET session_replication_role = 'replica';"
+    echo ""
+} >> "$OUTPUT_FILE"
 
 # Get all tables with their primary key columns, ordered by foreign key dependencies
 # Use pg_dump's internal dependency ordering by extracting table order from a test dump
@@ -72,10 +76,9 @@ ORDER BY fk_count, t.tablename;
 ")
 
 # Dump data for each table, ordered by primary key
-while IFS='|' read -r tablename pk_column fk_count; do
+while IFS='|' read -r tablename pk_column _fk_count; do
     tablename=$(echo "$tablename" | xargs)
     pk_column=$(echo "$pk_column" | xargs)
-    # fk_count is ignored but needed to read all columns
 
     if [ -z "$tablename" ]; then
         continue
@@ -87,8 +90,10 @@ while IFS='|' read -r tablename pk_column fk_count; do
     row_count=$(psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -t -c "SELECT COUNT(*) FROM \"$tablename\";" | xargs)
 
     if [ "$row_count" -gt 0 ]; then
-        echo "" >> "$OUTPUT_FILE"
-        echo "-- Data for table: $tablename (ordered by $pk_column)" >> "$OUTPUT_FILE"
+        {
+            echo ""
+            echo "-- Data for table: $tablename (ordered by $pk_column)"
+        } >> "$OUTPUT_FILE"
 
         # Get column names for the table
         columns=$(psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -t -c "
@@ -107,8 +112,10 @@ while IFS='|' read -r tablename pk_column fk_count; do
             : # Success - data written
         else
             # Fallback: dump without ordering if ORDER BY fails
-            echo "-- Warning: Could not order by $pk_column, dumping without order" >> "$OUTPUT_FILE"
-            psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -c "COPY \"$tablename\" TO STDOUT;" >> "$OUTPUT_FILE" 2> /dev/null
+            {
+                echo "-- Warning: Could not order by $pk_column, dumping without order"
+                psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -c "COPY \"$tablename\" TO STDOUT;"
+            } >> "$OUTPUT_FILE" 2> /dev/null
         fi
 
         # End COPY block
@@ -116,11 +123,13 @@ while IFS='|' read -r tablename pk_column fk_count; do
     fi
 done <<< "$TABLES"
 
-echo "" >> "$OUTPUT_FILE"
-echo "-- Re-enable foreign key checks" >> "$OUTPUT_FILE"
-echo "SET session_replication_role = 'origin';" >> "$OUTPUT_FILE"
-echo "" >> "$OUTPUT_FILE"
-echo "-- End of dump" >> "$OUTPUT_FILE"
+{
+    echo ""
+    echo "-- Re-enable foreign key checks"
+    echo "SET session_replication_role = 'origin';"
+    echo ""
+    echo "-- End of dump"
+} >> "$OUTPUT_FILE"
 
 echo "Database dump completed: $OUTPUT_FILE"
 ls -lh "$OUTPUT_FILE"

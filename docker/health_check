@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Web health check if web is started in this container
+if [ -f /run/supervisor.conf.d/web.conf ]; then
+    if [ -f /app/data/ssl/privkey.pem ]; then
+        curl --silent --max-time 30 --cacert /app/data/ssl/fullchain.pem https://localhost:4443/healthz/ > /dev/null || exit 1
+    else
+        curl --silent --max-time 30 http://localhost:8080/healthz/ > /dev/null || exit 1
+    fi
+fi
+
+# Supervisor based health check
+services="$(/app/venv/bin/supervisorctl status)"
+status_code=$?
+# 3 is expected as there is a single stopped service (check)
+if [ $status_code -ne 0 ] && [ $status_code -ne 3 ]; then
+    echo "supervisorctl failed ($status_code)"
+    exit 1
+fi
+
+# Look for failed services
+failing="$(echo "$services" | grep -v '^check *EXITED\|RUNNING' || true)"
+if [ -n "$failing" ]; then
+    echo "$failing"
+    exit 1
+fi

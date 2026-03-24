@@ -18,7 +18,7 @@ class BoostEndpointInfo(APIView):
 
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, format=None):
+    def get(self, request, format=None):  # pylint: disable=redefined-builtin  # noqa: A002
         """Return Boost endpoint module info."""
         return Response(
             {
@@ -33,7 +33,7 @@ class AddOrUpdateView(APIView):
 
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request, format=None):
+    def post(self, request, format=None):  # pylint: disable=redefined-builtin  # noqa: A002
         """
         Create or update Boost documentation components.
 

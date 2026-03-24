@@ -188,9 +188,9 @@ keywords = [
 ]
 license = "GPL-3.0-or-later"
 license-files = ["LICENSE"]
-name = "weblate"
+name = "boost-weblate"
 requires-python = ">=3.12"
-version = "5.16.1"
+version = "1.0.0"
 
 [project.optional-dependencies]
 alibaba = [
@@ -198,7 +198,7 @@ alibaba = [
   "aliyun-python-sdk-core>=2.16.0,<3.0.0"
 ]
 all = [
-  "weblate[alibaba,amazon,gerrit,gelf,google,ldap,mercurial,openai,postgres,zxcvbn]"
+  "boost-weblate[alibaba,amazon,gerrit,gelf,google,ldap,mercurial,openai,postgres,zxcvbn]"
 ]
 amazon = [
   "boto3>=1.38.0,<2.0"
@@ -487,6 +487,13 @@ ignore = [
   "settings_test.py",
   "test-repos"
 ]
+# Fork/local automation (Django setup before imports; not core app lint surface)
+ignore-paths = [
+  "scripts/auto/",
+  "scripts/backup/"
+]
+
+[tool.pytest]
 
 [tool.pytest.ini_options]
 addopts = "--reuse-db --cov=weblate --cov-report= --durations=20 --durations-min=2 --ignore=data --ignore=data-test --ignore=dev-docker --ignore=scripts"
@@ -519,6 +526,15 @@ filterwarnings = [
   'default:unclosed:ResourceWarning'
 ]
 python_files = ["test_*.py", "tests.py"]
+
+# Boost fork: local automation and docker helpers are not linted like core weblate/.
+[tool.ruff]
+extend-exclude = [
+  "docker/etc/nginx",
+  "scripts/auto",
+  "scripts/backup",
+  "weblate/boost_endpoint"
+]
 
 [tool.ruff.format]
 docstring-code-format = true
@@ -612,11 +628,16 @@ max-complexity = 16  # TODO: should be lower
 "weblate/*/tests**.py" = ["ANN001", "S105", "S106"]
 "weblate/auth/migrations/0003_fixup_teams.py" = ["T201"]
 "weblate/examples/*.py" = ["CPY001", "INP001"]
+"weblate/formats/asciidoc.py" = ["C901", "PLW1514", "S103"]
 "weblate/settings_*.py" = ["F405"]
 "weblate/settings_example.py" = ["ERA001"]
+"weblate/trans/autobatchtranslate.py" = ["PLR0917", "RUF059", "TRY300"]
 "weblate/trans/autofixes/__init__.py" = ["RUF067"]
 "weblate/trans/models/__init__.py" = ["RUF067"]
 "weblate/utils/generate_secret_key.py" = ["T201"]
+"weblate/utils/openrouter_translator.py" = ["TRY300", "TRY301"]
+# Large parser: complexity/Any acceptable until refactor
+"weblate/utils/quickbook.py" = ["ANN401", "C901", "PLR0912", "PLR0914", "PLR0915"]
 
 [tool.ruff.lint.pylint]
 # TODO: all these should be lower (or use defaults)
@@ -654,12 +675,15 @@ extend-ignore-re = [
 [tool.typos.default.extend-identifiers]
 # TODO: Most of these should be probably fixed, but it requires a database migration
 ApprovedStringNotificaton = "ApprovedStringNotificaton"
+# Boost library names / extensions in generated file lists (not "bitmap" / "make")
+bimap = "bimap"
 ChangedStringNotificaton = "ChangedStringNotificaton"
 ComponentTranslatedNotificaton = "ComponentTranslatedNotificaton"
 gir1 = "gir1"  # GObject Introspection packages
 InexistantFiles = "InexistantFiles"
 LanguageTranslatedNotificaton = "LanguageTranslatedNotificaton"
 LastAuthorCommentNotificaton = "LastAuthorCommentNotificaton"
+mak = "mak"
 MentionCommentNotificaton = "MentionCommentNotificaton"
 NewAlertNotificaton = "NewAlertNotificaton"
 NewAnnouncementNotificaton = "NewAnnouncementNotificaton"
@@ -694,6 +718,7 @@ extend-exclude = [
   "**.pot",
   "docs/changes/contributors",
   "docs/specs",
+  "scripts/auto/boost-*_libraries_list*.txt",
   "scripts/codespell.txt",
   "scripts/spdx-license-list",
   "weblate/static/js/vendor",

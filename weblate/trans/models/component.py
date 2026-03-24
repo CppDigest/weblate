@@ -8,6 +8,7 @@ import os
 import re
 import time
 from collections import defaultdict
+from datetime import UTC
 from glob import glob
 from itertools import chain
 from typing import TYPE_CHECKING, Any, TypedDict, cast
@@ -29,6 +30,7 @@ from django.db import IntegrityError, connection, models, transaction
 from django.db.models import Count, F, Q
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
+from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
@@ -2917,7 +2919,6 @@ class Component(
                         request=request,
                         change=change,
                     )
-                    # transaction.on_commit(lambda: self.auto_translate_via_openrouter())
                 except InvalidTemplateError as error:
                     self.log_warning(
                         "skipping update due to error in parsing template: %s",
@@ -4065,8 +4066,6 @@ class Component(
                     "language_code": code,
                 },
             )
-            # if create_translations:
-            #     translation = translation.auto_translate_via_openrouter()
             # Make it clear that there is no change for the newly created translation
             # to avoid expensive last change lookup in stats while committing changes.
             if created:
@@ -4394,6 +4393,7 @@ class Component(
             user_id=request.user.id if request is not None else None,
             file_sync=file_sync,
         )
+        return None
 
     def _autobatchtranslate_via_openrouter_immediate(
         self,
@@ -4457,8 +4457,6 @@ class Component(
                 except Exception as e:
                     # Handle IntegrityError and other exceptions gracefully
                     # This can happen if another task already created the units
-                    from django.db import IntegrityError
-
                     if not isinstance(e, IntegrityError):
                         self.log_error(
                             "Autobatch translation: error during file parsing for language %s in component %s (ID: %d): %s",
@@ -4526,8 +4524,6 @@ class Component(
         # This ensures file sync runs after all translations are processed
         # Only schedule if file_sync is True and we processed at least one translation
         if file_sync and lang and translations_processed:
-            from django.db import transaction
-
             # Run file sync synchronously after transaction commits to prevent race condition
             # where commit_pending() commits with default message before file sync task runs
             # Using transaction.on_commit() ensures:
@@ -4601,22 +4597,12 @@ class Component(
         This function reads from database, writes to files, and commits to git.
         Minimal database modifications are performed (local_revision update).
         """
-        from datetime import UTC
-
-        from django.utils import timezone
-
-        from weblate.trans.exceptions import FileParseError
-        from weblate.trans.models.pending import PendingUnitChange
-        from weblate.utils.errors import report_error
-
         # For autobatch translation, handle only one translation: the specified language for this component
         if not lang:
             self.log_error(
                 "File sync: lang parameter is required for autobatch translation"
             )
             return False
-
-        from weblate.lang.models import Language
 
         try:
             language = Language.objects.get(code=lang)
@@ -4650,13 +4636,6 @@ class Component(
         # Track translations that were updated and need to be committed
         translations_to_commit: list[tuple[Translation, str, datetime]] = []
 
-        # Get author name from request if available
-        author = (
-            request.user.get_author_name()
-            if request and request.user
-            else "Weblate <noreply@weblate.org>"
-        )
-
         # Write files first (inside lock)
         with self.repository.lock:
             # translation.component is already set to self since we fetched it via self.translation_set.get()
@@ -4678,8 +4657,6 @@ class Component(
             # Read pending changes for this translation
             # For autobatch translation, bypass commit policy filtering to force commit
             # even if units are STATE_FUZZY (which is the default for auto-translations)
-            from weblate.trans.models.pending import PendingUnitChange
-
             # Simply get all pending changes for this translation
             # We bypass commit policy filtering to ensure STATE_FUZZY units are committed
             pending_changes = list(
@@ -4692,10 +4669,11 @@ class Component(
                 return False
 
             # Group changes by author for consistent file writing
-            commit_groups = translation._group_changes_by_author(pending_changes)
-            file_updated = False
+            commit_groups = translation._group_changes_by_author(  # noqa: SLF001
+                pending_changes
+            )
 
-            for group_idx, (author_obj, changes) in enumerate(commit_groups, 1):
+            for author_obj, changes in commit_groups:
                 author_name = author_obj.get_author_name() if author_obj else "Unknown"
                 timestamp = max(change.timestamp for change in changes)
 
@@ -4706,7 +4684,6 @@ class Component(
                         changes, store, author_name
                     )
                     if any(changes_status.values()):
-                        file_updated = True
                         was_changed = True
 
                         # Track this translation for committing after lock is released
@@ -4728,9 +4705,7 @@ class Component(
                     # Continue with next group even if one fails
 
         # Commit all updated translations (outside lock to avoid deadlock)
-        for idx, (translation, author_name, commit_timestamp) in enumerate(
-            translations_to_commit, 1
-        ):
+        for translation, author_name, commit_timestamp in translations_to_commit:
             component = translation.component
             # Use default autobatch translation commit message template
             # Uses template variables that will be rendered by render_template

@@ -1,9 +1,8 @@
-"""
-AsciiDoc file format support for Weblate.
+# Copyright © Michal Čihař <michal@weblate.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 
-This format handles .adoc files for documentation translation using po4a.
-Based on po4a's AsciiDoc module for extraction and translation.
-"""
+"""AsciiDoc file format support for Weblate (po4a-based)."""
 
 import os
 import pathlib
@@ -93,10 +92,12 @@ class AsciiDocFormat(ConvertFormat):
 
         # Get storefile path (localized file for po4a-gettextize)
         # If storefile is a file object without a name, we need to create a temp file
+        storefile_path: str | None
         if isinstance(storefile, str):
             storefile_path = storefile
         else:
-            storefile_path = getattr(storefile, "name", None)
+            raw_name = getattr(storefile, "name", None)
+            storefile_path = raw_name if isinstance(raw_name, str) else None
 
         # When template_store is None (e.g., during base file validation),
         # use storefile as both template and localized file
@@ -267,6 +268,10 @@ class AsciiDocFormat(ConvertFormat):
 
         Uses po4a-translate to merge PO translations back into AsciiDoc template.
         """
+        if self.template_store is None:
+            msg = "AsciiDoc: cannot save without template store"
+            report_error(msg)
+            raise RuntimeError(msg)
         # Get template AsciiDoc file path
         template_path = self.template_store.storefile
         if hasattr(template_path, "name"):
@@ -289,7 +294,7 @@ class AsciiDocFormat(ConvertFormat):
         # Use msgattrib to clear fuzzy flags from the PO file
         # This allows po4a-translate to use fuzzy translations
         try:
-            result = subprocess.run(
+            msgattrib_result = subprocess.run(
                 [
                     "msgattrib",
                     "--clear-fuzzy",
@@ -299,9 +304,9 @@ class AsciiDocFormat(ConvertFormat):
                 text=False,  # Capture as bytes to preserve encoding
                 check=False,
             )
-            if result.returncode == 0 and result.stdout:
+            if msgattrib_result.returncode == 0 and msgattrib_result.stdout:
                 # Write the output to the second temporary file
-                pathlib.Path(tmp_po_path_02).write_bytes(result.stdout)
+                pathlib.Path(tmp_po_path_02).write_bytes(msgattrib_result.stdout)
             else:
                 # If msgattrib fails, use the original PO file
                 tmp_po_path_02 = tmp_po_path_01
@@ -324,7 +329,7 @@ class AsciiDocFormat(ConvertFormat):
             msgfmt_wrapper_path = os.path.join(tmp_bin_dir, "msgfmt")
 
             # Create wrapper script that always succeeds
-            with open(msgfmt_wrapper_path, "w") as wrapper:
+            with open(msgfmt_wrapper_path, "w", encoding="utf-8") as wrapper:
                 wrapper.write("#!/bin/bash\n")
                 wrapper.write(
                     "# Wrapper to bypass msgfmt validation - always succeed to allow po4a-translate to proceed\n"
@@ -349,7 +354,7 @@ class AsciiDocFormat(ConvertFormat):
             # -m: template file (master)
             # -p: PO file with translations
             # -l: output translated AsciiDoc file
-            result = subprocess.run(
+            po4a_result = subprocess.run(
                 [
                     "po4a-translate",
                     "-f",
@@ -390,9 +395,10 @@ class AsciiDocFormat(ConvertFormat):
                 handle.write(content.encode("utf-8"))
             else:
                 # Translation failed: raise exception to prevent silent failure
+                stderr_text = po4a_result.stderr or ""
                 error_msg = (
-                    f"po4a-translate failed: {result.stderr}"
-                    if result.returncode != 0
+                    f"po4a-translate failed: {stderr_text}"
+                    if po4a_result.returncode != 0
                     else "po4a-translate failed: no output file generated"
                 )
                 report_error(error_msg)
@@ -400,8 +406,9 @@ class AsciiDocFormat(ConvertFormat):
                 raise RuntimeError(error_msg)
 
             # Report warnings if any (but don't fail on warnings)
-            if result.returncode != 0 and result.stderr:
-                report_error(f"po4a-translate warning: {result.stderr}")
+            if po4a_result.returncode != 0 and po4a_result.stderr:
+                warn_err = po4a_result.stderr
+                report_error(f"po4a-translate warning: {warn_err}")
         except subprocess.CalledProcessError as e:
             error_msg = f"po4a-translate error: {e.stderr}"
             report_error(error_msg)

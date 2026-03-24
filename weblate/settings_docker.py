@@ -772,6 +772,7 @@ INSTALLED_APPS = [
     "customize",
     # Weblate apps on top to override Django locales and templates
     "weblate.addons",
+    "weblate.boost_endpoint",
     "weblate.auth",
     "weblate.checks",
     "weblate_fonts",
@@ -1492,6 +1493,14 @@ SENTRY_PROFILES_SAMPLE_RATE = get_env_float("SENTRY_PROFILES_SAMPLE_RATE", 1.0)
 SENTRY_TOKEN = get_env_str("SENTRY_TOKEN")
 SENTRY_SEND_PII = get_env_bool("SENTRY_SEND_PII", False)
 ZAMMAD_URL = get_env_str("WEBLATE_ZAMMAD_URL")
+
+# boost-weblate specific settings
+AUTO_BATCH_TRANSLATE_VIA_OPENROUTER = get_env_bool(
+    "AUTO_BATCH_TRANSLATE_VIA_OPENROUTER", True
+)
+BOOST_ENDPOINT_ADD_TRANSLATION_SECONDS = get_env_int(
+    "BOOST_ENDPOINT_ADD_TRANSLATION_SECONDS", 300
+)
 
 ADDITIONAL_CONFIG = Path("/app/data/settings-override.py")
 if ADDITIONAL_CONFIG.exists():

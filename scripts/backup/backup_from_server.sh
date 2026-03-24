@@ -37,13 +37,11 @@ export PGPASSWORD="$DB_PASSWORD"
 
 # Use pg_dump plain SQL format for compatibility with psql restores
 DB_DUMP_FILE="weblate_database_$TIMESTAMP.sql"
-pg_dump -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" \
+if pg_dump -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" \
     --format=plain \
     --no-owner \
     --no-privileges \
-    -f "$DB_DUMP_FILE"
-
-if [ $? -eq 0 ]; then
+    -f "$DB_DUMP_FILE"; then
     echo -e "${GREEN}✓ Database backup created: $DB_DUMP_FILE${NC}"
     ls -lh "$DB_DUMP_FILE"
 else

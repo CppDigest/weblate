@@ -1,0 +1,116 @@
+# boost-weblate Docker environment configuration
+# Copy this file to 'environment' and fill in your values before first run:
+#   cp environment.example environment
+#
+# See Weblate documentation for detailed description:
+# https://docs.weblate.org/en/latest/admin/install/docker.html#generic-settings
+
+# ---------------------------------------------------------------------------
+# Weblate setup
+# ---------------------------------------------------------------------------
+WEBLATE_DEBUG=0
+WEBLATE_LOGLEVEL=INFO
+WEBLATE_SITE_TITLE=Weblate
+WEBLATE_ADMIN_NAME=Weblate Admin
+WEBLATE_ADMIN_EMAIL=weblate@example.com
+WEBLATE_SITE_DOMAIN=localhost:8000
+WEBLATE_ADMIN_PASSWORD=
+WEBLATE_SERVER_EMAIL=noreply@example.com
+WEBLATE_DEFAULT_FROM_EMAIL=noreply@example.com
+WEBLATE_MIN_PASSWORD_SCORE=0
+WEBLATE_ALLOWED_HOSTS=*
+WEBLATE_REGISTRATION_OPEN=1
+WEBLATE_TIME_ZONE=UTC
+
+# Data directory inside the container (default: /app/data)
+#WEBLATE_DATA_DIR=/app/data
+
+# ---------------------------------------------------------------------------
+# SSL / reverse proxy
+# ---------------------------------------------------------------------------
+#WEBLATE_ENABLE_HTTPS=1
+#WEBLATE_IP_PROXY_HEADER=HTTP_X_FORWARDED_FOR
+#WEBLATE_SECURE_PROXY_SSL_HEADER=HTTP_X_FORWARDED_PROTO,https
+
+# ---------------------------------------------------------------------------
+# Access control
+# ---------------------------------------------------------------------------
+#WEBLATE_REQUIRE_LOGIN=1
+
+# ---------------------------------------------------------------------------
+# LDAP auth (optional)
+# ---------------------------------------------------------------------------
+#WEBLATE_AUTH_LDAP_SERVER_URI=ldap://ldap.example.org
+#WEBLATE_AUTH_LDAP_USER_DN_TEMPLATE=uid=%(user)s,ou=People,dc=example,dc=net
+#WEBLATE_AUTH_LDAP_USER_ATTR_MAP=first_name:name,email:mail
+
+# ---------------------------------------------------------------------------
+# PostgreSQL (external server)
+# ---------------------------------------------------------------------------
+POSTGRES_PASSWORD=
+POSTGRES_USER=
+POSTGRES_DB=
+POSTGRES_DATABASE=
+POSTGRES_HOST=host.docker.internal
+POSTGRES_PORT=5432
+
+# ---------------------------------------------------------------------------
+# Redis cache (HOST uses Docker Compose service name)
+# ---------------------------------------------------------------------------
+REDIS_HOST=cache
+REDIS_PORT=6379
+
+# ---------------------------------------------------------------------------
+# Mail server
+# ---------------------------------------------------------------------------
+WEBLATE_EMAIL_HOST=localhost
+WEBLATE_EMAIL_HOST_USER=
+WEBLATE_EMAIL_HOST_PASSWORD=
+# To disable email entirely (e.g. no SMTP available):
+#WEBLATE_EMAIL_BACKEND=django.core.mail.backends.dummy.EmailBackend
+
+# ---------------------------------------------------------------------------
+# GitHub credentials (for push/PR via Weblate)
+# GITHUB_USERNAME / GITHUB_TOKEN are read by get_env_credentials("GITHUB")
+# ---------------------------------------------------------------------------
+WEBLATE_GITHUB_HOST=api.github.com
+WEBLATE_GITHUB_USERNAME=
+WEBLATE_GITHUB_TOKEN=
+
+# GitLab
+#WEBLATE_GITLAB_USERNAME=
+#WEBLATE_GITLAB_HOST=
+#WEBLATE_GITLAB_TOKEN=
+
+# Gitea
+#GITEA_USERNAME=
+#GITEA_TOKEN=
+
+# ---------------------------------------------------------------------------
+# Social auth (OAuth login)
+# ---------------------------------------------------------------------------
+#WEBLATE_SOCIAL_AUTH_GITHUB_KEY=
+#WEBLATE_SOCIAL_AUTH_GITHUB_SECRET=
+#WEBLATE_SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=
+#WEBLATE_SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=
+# ---------------------------------------------------------------------------
+# Monitoring / analytics (all optional)
+# ---------------------------------------------------------------------------
+#SENTRY_DSN=
+#SENTRY_ENVIRONMENT=
+#WEBLATE_GOOGLE_ANALYTICS_ID=
+#WEBLATE_MATOMO_SITE_ID=
+#WEBLATE_MATOMO_URL=
+
+# ---------------------------------------------------------------------------
+# Nginx
+# ---------------------------------------------------------------------------
+CLIENT_MAX_BODY_SIZE=1000M
+
+# ---------------------------------------------------------------------------
+# boost-weblate specific settings
+# ---------------------------------------------------------------------------
+# Enable auto batch-translate via OpenRouter
+AUTO_BATCH_TRANSLATE_VIA_OPENROUTER=1
+# Seconds to wait for component/translation to be ready before adding a language
+BOOST_ENDPOINT_ADD_TRANSLATION_SECONDS=300

@@ -79,6 +79,8 @@ jobs:
       DJANGO_SETTINGS_MODULE: weblate.settings_test
       PYTHONWARNINGS: default,ignore:unclosed:ResourceWarning
       PYTHONUNBUFFERED: 1
+      # Step `if` cannot use `secrets` (actionlint); gate Codecov via env instead.
+      CODECOV_NONEMPTY: ${{ secrets.CODECOV_TOKEN != '' && 'true' || 'false' }}
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
@@ -145,12 +147,13 @@ jobs:
         uv run coverage combine
         uv run coverage xml
     - uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+      if: ${{ env.CODECOV_NONEMPTY == 'true' }}
       with:
         token: ${{secrets.CODECOV_TOKEN}}
         flags: unittests
         name: Tests py${{ matrix.python-version }}, ${{ matrix.database }}, ${{ matrix.requirements }} deps
     - name: Upload test results to Codecov
-      if: ${{ !cancelled() }}
+      if: ${{ !cancelled() && env.CODECOV_NONEMPTY == 'true' }}
       uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
